@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painting Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-logo">🎨 Painting Store</a>
+        <ul class="nav-links">
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <h1>Discover Beautiful Paintings</h1>
+        <p>Find art that speaks to your soul and visualize it on your wall with AR.</p>
+    </header>
+
+    <div class="paintings">
+        {% for painting in paintings %}
+        <div class="painting">
+            <img src="{{ painting.image }}" alt="{{ painting.name }}">
+            <h2>{{ painting.name }}</h2>
+            <p>Price: ${{ painting.price }}</p>
+            <button onclick="addToCart({{ painting.id }})"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+            <a class="ar-button" href="/ar_view/{{ painting.id }}"><i class="fas fa-vr-cardboard"></i> View in AR</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

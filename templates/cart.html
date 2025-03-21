@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-logo">🎨 Painting Store</a>
+        <ul class="nav-links">
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">{{ cart|length }}</span>)</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <h1>Your Shopping Cart</h1>
+        <p>Review and manage your selected paintings before checkout.</p>
+    </header>
+
+    <div class="cart-container">
+        {% if cart %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Painting</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-img">
+                            {{ item.name }}
+                        </td>
+                        <td>${{ item.price }}</td>
+                        <td>
+                            <button class="remove-btn" onclick="removeFromCart({{ item.id }})">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        {% else %}
+            <p class="empty-cart">Your cart is empty.</p>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
